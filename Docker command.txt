@@ -1,0 +1,56 @@
+Docker command
+1. docker build -t node-app-image .
+docker run -d --name node-app node-app-image
+2. docker rm node-app -f  
+3. docker run -p 3000:3000 -d --name node-app  node-app-image
+4. docker exec -it node-app bash
+5. volume(bind mound) : sink file or folder with docker, so that one change in file auto reflected
+    docker run -v pathtothelocalfolder:pathtocontainer -p 3000:3000 -d --name node-app  node-app-image
+    docker run  -vC:\projects\projects\node_docker:/app -p 3000:3000 -d --name node-app  node-app-image 
+    copy nodemodules from /app/node_modules to /app/node_modules inorder to secure modules from replacing
+    docker run  -v C:\projects\projects\node_docker:/app -v /app/node_modules -p 3000:3000 -d --name node-app  node-app-image
+    read only
+     docker run  -v C:\projects\projects\node_docker:/app:ro -v /app/node_modules -p 3000:3000 -d --name node-app  node-app-image
+    ENVIroment variables
+    docker run  -v C:\projects\projects\node_docker:/app:ro -v /app/node_modules --env-file ./.env -p 3000:3000 -d --name node-app  node-app-image
+    docker run -d --name mongodb mongo
+6. docker ps => running container
+7. docker ps-a => all container
+8. docker volume => preserve data
+    remove volume:  docker volume prune  
+    docker rm node-app -fv
+9. Docker compose =>  multiple docker handling system docker-compose.yml
+    docker-compose up -d
+    docker-compose down
+    docker-compose down -v removing volume
+10. Force re buid
+    docker-compose up -d --build
+
+11. docker exec -it node_docker-mongo-1 bash 
+
+12. mongosh -u  -p
+
+13. ENIROMENT change 
+    docker-compose -f docker-compose.yml -f docker-compose.dev.yml up -d
+    docker-compose -f docker-compose.yml -f docker-compose.dev.yml up -d -- build
+
+14. docker logs node_docker-node-app-1  --- log details
+15. docker inspect node_docker_default  --- For ip add
+16. only specific service
+    docker-compose -f docker-compose.yml -f docker-compose.dev.yml up -d --no-deps node-app 
+17.  Recreate anonymous volumes instead of retrieving data from the previous containers.
+ docker-compose -f docker-compose.yml -f docker-compose.dev.yml up -d --build --V   
+
+18.  Multiple Appication
+docker-compose -f docker-compose.yml -f docker-compose.dev.yml up -d --scale node-app=2
+
+
+Deployment
+1. Rename docker image dockerusename/projects
+docker image tag node_docker-node-app aruna1994/node-app
+docker push myusername/project
+
+
+
+
+
